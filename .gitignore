@@ -1,0 +1,29 @@
+# Dependency Directories
+**/node_modules/
+
+# Build Outputs
+**/dist/
+**/out/
+**/.angular/
+
+# Environment Variables & Secrets
+**/.env
+**/.env.local
+**/.env.*.local
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS Files
+Thumbs.db
+.DS_Store
+
+# Temporary files
+tmp/
+temp/

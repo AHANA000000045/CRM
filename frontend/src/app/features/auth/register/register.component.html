@@ -1,0 +1,111 @@
+<div class="auth-container">
+  <mat-card class="auth-card glass-panel">
+    <mat-card-header class="auth-header">
+      <div class="logo-wrapper">
+        <mat-icon class="logo-icon">rocket_launch</mat-icon>
+        <span class="logo-text">FlowCRM</span>
+      </div>
+      <mat-card-title class="auth-title">Create your workspace</mat-card-title>
+      <mat-card-subtitle class="auth-subtitle">Register your organization to start scaling</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content class="auth-content">
+      @if (errorMessage()) {
+        <div class="error-banner">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ errorMessage() }}</span>
+        </div>
+      }
+
+      @if (successMessage()) {
+        <div class="success-banner">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>{{ successMessage() }}</span>
+        </div>
+      }
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Organization Name</mat-label>
+            <input matInput type="text" formControlName="organizationName" placeholder="Acme Corp" required />
+            @if (registerForm.get('organizationName')?.hasError('required') && registerForm.get('organizationName')?.touched) {
+              <mat-error>Name is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Workspace Domain</mat-label>
+            <input matInput type="text" formControlName="domain" placeholder="acme.com" required />
+            @if (registerForm.get('domain')?.hasError('pattern') && registerForm.get('domain')?.touched) {
+              <mat-error>Invalid domain format (e.g. acme.com)</mat-error>
+            }
+            @if (registerForm.get('domain')?.hasError('required') && registerForm.get('domain')?.touched) {
+              <mat-error>Domain is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" formControlName="firstName" required />
+            @if (registerForm.get('firstName')?.hasError('required') && registerForm.get('firstName')?.touched) {
+              <mat-error>First name required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" formControlName="lastName" required />
+            @if (registerForm.get('lastName')?.hasError('required') && registerForm.get('lastName')?.touched) {
+              <mat-error>Last name required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Administrator Email</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="admin@acme.com" autocomplete="email" required />
+          <mat-icon matSuffix>mail_outline</mat-icon>
+          @if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
+            <mat-error>Please enter a valid email address</mat-error>
+          }
+          @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
+            <mat-error>Email is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Admin Password</mat-label>
+          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" required />
+          <button mat-icon-button matSuffix (click)="togglePasswordVisibility(); $event.preventDefault()" [attr.aria-label]="'Hide password'">
+            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched) {
+            <mat-error>Password must be at least 6 characters</mat-error>
+          }
+          @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-flat-button color="primary" type="submit" [disabled]="registerForm.invalid || isLoading()" class="submit-btn">
+            @if (isLoading()) {
+              <mat-spinner diameter="20" color="accent" class="spinner"></mat-spinner>
+              <span>Creating workspace...</span>
+            } @else {
+              <span>Create Account</span>
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions class="auth-footer">
+      <span class="footer-text">Already registered?</span>
+      <a mat-button color="primary" routerLink="/auth/login" class="footer-link">Log In</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

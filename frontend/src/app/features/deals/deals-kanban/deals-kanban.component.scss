@@ -1,0 +1,304 @@
+$primary-color: hsl(222, 89%, 60%);
+$text-main: var(--text-main);
+$text-muted: var(--text-muted);
+$panel-background: var(--panel-bg);
+$panel-border: var(--panel-border);
+$bg-color: var(--bg-color);
+$shadow-color: var(--shadow-color);
+
+// Stage color codes for probability badges
+$prospecting-color: hsl(200, 95%, 48%);
+$qualification-color: hsl(262, 80%, 65%);
+$proposal-color: hsl(270, 85%, 60%);
+$negotiation-color: hsl(35, 90%, 55%);
+$won-color: hsl(142, 71%, 45%);
+$lost-color: hsl(0, 84%, 60%);
+
+.deals-kanban-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100vh - 120px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.view-header {
+  .view-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: $text-main;
+    margin: 0 0 4px;
+    letter-spacing: -0.5px;
+  }
+  .view-subtitle {
+    font-size: 14px;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: hsl(0, 100%, 75%);
+  margin-bottom: 8px;
+}
+
+.spinner-container {
+  padding: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 1. Kanban Board Grid View
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  flex: 1;
+
+  // Thin scrollbar formatting
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $panel-border;
+    border-radius: 4px;
+    &:hover {
+      background: rgba($primary-color, 0.2);
+    }
+  }
+}
+
+// 2. Kanban Columns
+.kanban-column {
+  width: 290px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba($panel-background, 0.3);
+  border: 1px solid $panel-border;
+  border-radius: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+
+  .column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid $panel-border;
+
+    .column-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .column-title {
+        font-weight: 600;
+        font-size: 14.5px;
+        color: $text-main;
+      }
+
+      .column-count {
+        background: $panel-border;
+        color: $text-muted;
+        font-size: 11.5px;
+        font-weight: 600;
+        padding: 2px 7px;
+        border-radius: 20px;
+      }
+    }
+
+    .column-total {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: $primary-color;
+    }
+  }
+}
+
+// 3. Drop List Area
+.kanban-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 250px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $panel-border;
+    border-radius: 3px;
+  }
+}
+
+// 4. Draggable Deal Cards
+.deal-card {
+  background: $panel-background !important;
+  border: 1px solid $panel-border;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  cursor: grab;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.1s;
+
+  &:hover {
+    border-color: rgba($primary-color, 0.3);
+    box-shadow: 0 8px 24px $shadow-color;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  .card-header-deal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+
+    .deal-name {
+      font-weight: 600;
+      font-size: 14.5px;
+      color: $text-main;
+      line-height: 1.3;
+    }
+
+    .probability-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+
+      &.prospecting { background: rgba($prospecting-color, 0.1); color: $prospecting-color; }
+      &.qualification { background: rgba($qualification-color, 0.1); color: $qualification-color; }
+      &.proposal { background: rgba($proposal-color, 0.1); color: $proposal-color; }
+      &.negotiation { background: rgba($negotiation-color, 0.1); color: $negotiation-color; }
+      &.closed-won { background: rgba($won-color, 0.1); color: $won-color; }
+      &.closed-lost { background: rgba($lost-color, 0.1); color: $lost-color; }
+    }
+  }
+
+  .card-body-deal {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .customer-row, .date-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: $text-muted;
+
+      .icon-mini {
+        font-size: 16px;
+        height: 16px;
+        width: 16px;
+      }
+
+      span {
+        font-size: 12.5px;
+      }
+    }
+
+    .customer-name {
+      font-weight: 500;
+    }
+  }
+
+  .card-footer-deal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed $panel-border;
+    padding-top: 10px;
+    margin-top: 2px;
+
+    .deal-amount {
+      font-size: 15px;
+      font-weight: 700;
+      color: $text-main;
+    }
+
+    .owner-avatar {
+      height: 26px;
+      width: 26px;
+      border-radius: 50%;
+      background: rgba($primary-color, 0.15);
+      color: $primary-color;
+      font-weight: 600;
+      font-size: 11px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid rgba($primary-color, 0.2);
+    }
+  }
+}
+
+// 5. Column Empty State Placeholder
+.empty-column-placeholder {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed $panel-border;
+  border-radius: 12px;
+  min-height: 100px;
+  color: $text-muted;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.005);
+}
+
+// 6. Angular CDK Drag and Drop Animation Styles
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3) !important;
+  background: rgba($bg-color, 0.95);
+  border: 1px solid rgba($primary-color, 0.4);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.15;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed $primary-color;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.kanban-list.cdk-drop-list-dragging .deal-card:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}

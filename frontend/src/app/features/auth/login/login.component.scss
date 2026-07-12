@@ -1,0 +1,221 @@
+// Premium Color Palette using HSL
+$primary-color: hsl(222, 89%, 60%);
+$primary-hover: hsl(222, 89%, 52%);
+$background-dark: hsl(222, 47%, 11%);
+$panel-background: rgba(255, 255, 255, 0.03);
+$panel-border: rgba(255, 255, 255, 0.08);
+$text-light: hsl(210, 40%, 98%);
+$text-muted: hsl(215, 20%, 65%);
+$error-color: hsl(0, 84%, 60%);
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background: radial-gradient(circle at 10% 20%, hsl(224, 64%, 15%) 0%, $background-dark 100%);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  margin: 20px;
+  padding: 40px;
+  border-radius: 20px;
+  background: $panel-background;
+  border: 1px solid $panel-border;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-header {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+
+    .logo-icon {
+      color: $primary-color;
+      font-size: 28px;
+      height: 28px;
+      width: 28px;
+      animation: pulse 3s infinite ease-in-out;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: $text-light;
+    }
+  }
+
+  .auth-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: $text-light;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .auth-subtitle {
+    font-size: 14px;
+    color: $text-muted;
+    text-align: center;
+  }
+}
+
+.auth-content {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba($error-color, 0.1);
+  border: 1px solid rgba($error-color, 0.2);
+  color: hsl(0, 100%, 80%);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  margin-bottom: 16px;
+
+  mat-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .full-width {
+    width: 100%;
+  }
+
+  // Material field overrides for sleek dark theme styling
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      background-color: rgba(255, 255, 255, 0.02) !important;
+      border-radius: 8px !important;
+    }
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+      border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline__leading,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline__notch,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline__trailing {
+      border-color: rgba(255, 255, 255, 0.25) !important;
+    }
+    .mdc-text-field--focused .mdc-notched-outline__leading,
+    .mdc-text-field--focused .mdc-notched-outline__notch,
+    .mdc-text-field--focused .mdc-notched-outline__trailing {
+      border-color: $primary-color !important;
+      border-width: 2px !important;
+    }
+    .mat-mdc-form-field-label-wrapper {
+      color: $text-muted;
+    }
+    .mat-mdc-form-field-input-control {
+      color: $text-light !important;
+    }
+    .mat-icon-button, .mat-mdc-form-field-icon-suffix mat-icon {
+      color: $text-muted;
+    }
+  }
+
+  .form-actions {
+    margin-top: 10px;
+
+    .submit-btn {
+      width: 100%;
+      height: 48px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 8px;
+      background-color: $primary-color;
+      color: white;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      &:hover:not(:disabled) {
+        background-color: $primary-hover;
+        transform: translateY(-1px);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      &:disabled {
+        background-color: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.35);
+      }
+
+      .spinner {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.auth-footer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+
+  .footer-text {
+    font-size: 14px;
+    color: $text-muted;
+  }
+
+  .footer-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: $primary-color;
+    padding: 0 4px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Micro-animations
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.85;
+  }
+}
