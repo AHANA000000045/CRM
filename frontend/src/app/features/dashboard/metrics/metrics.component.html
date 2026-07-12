@@ -1,0 +1,106 @@
+<!-- Welcome Header -->
+<div class="workspace-header">
+  <h1 class="welcome-title">Welcome back, {{ authService.currentUser()?.firstName }} 👋</h1>
+  <p class="welcome-subtitle">Here is the latest snapshot for your workspace today.</p>
+</div>
+
+<!-- Metrics KPI Grid -->
+<div class="metrics-grid">
+  @for (metric of metrics; track metric.title) {
+    <mat-card class="metric-card glass-panel" matRipple>
+      <div class="metric-body">
+        <div class="metric-info">
+          <span class="metric-label">{{ metric.title }}</span>
+          <span class="metric-value">{{ metric.value }}</span>
+          <span class="metric-change" [class.positive]="metric.change.startsWith('+')">{{ metric.change }} <span style="font-size: 11px; color:#64748b;">this month</span></span>
+        </div>
+        <div class="metric-icon-box" [class]="metric.class">
+          <mat-icon>{{ metric.icon }}</mat-icon>
+        </div>
+      </div>
+    </mat-card>
+  }
+</div>
+
+<!-- Main Columns Grid -->
+<div class="content-columns">
+  <!-- Left Column: Charts -->
+  <div class="charts-column">
+    <!-- Sales Pipeline Chart -->
+    <mat-card class="chart-card glass-panel">
+      <mat-card-header>
+        <mat-card-title>Sales Pipeline Distribution</mat-card-title>
+        <mat-card-subtitle>Active deals grouped by stages</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="chart-container">
+        <canvas #pipelineChart></canvas>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Lead Ingestions Chart -->
+    <mat-card class="chart-card glass-panel">
+      <mat-card-header>
+        <mat-card-title>Lead Ingestion Metrics</mat-card-title>
+        <mat-card-subtitle>Monthly leads captured</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="chart-container">
+        <canvas #leadChart></canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Right Column: Tasks & Activities -->
+  <div class="widgets-column">
+    <!-- Upcoming Tasks -->
+    <mat-card class="widget-card glass-panel">
+      <mat-card-header>
+        <mat-card-title>My Urgent Tasks</mat-card-title>
+        <mat-card-subtitle>Due items requiring action</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="widget-content">
+        <div class="task-list">
+          @for (task of tasks; track task.id) {
+            <div class="task-item" [class.task-done]="task.done">
+              <button mat-icon-button (click)="toggleTask(task.id)" class="checkbox-btn">
+                <mat-icon class="checkbox-icon">
+                  {{ task.done ? 'check_box' : 'check_box_outline_blank' }}
+                </mat-icon>
+              </button>
+              <div class="task-details">
+                <span class="task-title">{{ task.title }}</span>
+                <span class="task-meta">Due: {{ task.dueDate }} | <span class="priority-tag" [class]="task.priority.toLowerCase()">{{ task.priority }} Priority</span></span>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Recent Activities Feed -->
+    <mat-card class="widget-card glass-panel">
+      <mat-card-header>
+        <mat-card-title>Recent Activities Feed</mat-card-title>
+        <mat-card-subtitle>Live updates from your team</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="widget-content">
+        <div class="activity-timeline">
+          @for (activity of activities; track activity.action) {
+            <div class="activity-item">
+              <div class="activity-icon-container" [class]="activity.type">
+                <mat-icon>
+                  {{ activity.type === 'deal' ? 'monetization_on' : activity.type === 'call' ? 'phone' : activity.type === 'lead' ? 'person_add' : 'assignment_turned_in' }}
+                </mat-icon>
+              </div>
+              <div class="activity-details">
+                <p class="activity-text">
+                  <strong>{{ activity.user }}</strong> {{ activity.action }}
+                </p>
+                <span class="activity-time">{{ activity.time }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

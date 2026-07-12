@@ -1,0 +1,77 @@
+@use '@angular/material' as mat;
+
+// Light and Dark theme configurations
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+));
+
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+));
+
+:root {
+  // Theme Variables - Defaults to Light Theme
+  --bg-color: hsl(210, 20%, 98%);
+  --panel-bg: rgba(255, 255, 255, 0.7);
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --text-main: hsl(222, 47%, 11%);
+  --text-muted: hsl(215, 16%, 47%);
+  --shadow-color: rgba(0, 0, 0, 0.05);
+
+  --rev-color: hsl(142, 71%, 45%);
+  --lead-color: hsl(200, 95%, 48%);
+  --win-color: hsl(270, 85%, 60%);
+  --deal-color: hsl(35, 90%, 55%);
+}
+
+// Dark theme overrides
+.dark-theme {
+  --bg-color: hsl(222, 47%, 11%);
+  --panel-bg: rgba(255, 255, 255, 0.03);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --text-main: hsl(210, 40%, 98%);
+  --text-muted: hsl(215, 20%, 65%);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+// Light theme explicit activation
+.light-theme {
+  --bg-color: hsl(210, 20%, 98%);
+  --panel-bg: rgba(255, 255, 255, 0.7);
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --text-main: hsl(222, 47%, 11%);
+  --text-muted: hsl(215, 16%, 47%);
+  --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+html {
+  height: 100%;
+  @include mat.all-component-themes($light-theme);
+}
+
+.dark-theme {
+  @include mat.all-component-colors($dark-theme);
+  color-scheme: dark;
+}
+
+.light-theme {
+  @include mat.all-component-colors($light-theme);
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

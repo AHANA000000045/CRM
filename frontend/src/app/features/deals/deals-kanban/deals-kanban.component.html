@@ -1,0 +1,90 @@
+<div class="deals-kanban-container">
+  <!-- Header Section -->
+  <div class="view-header">
+    <div class="header-text">
+      <h1 class="view-title">Deals Board</h1>
+      <p class="view-subtitle">Manage sales opportunities across the stages. Drag and drop cards to progress deals.</p>
+    </div>
+  </div>
+
+  <!-- Error Banner -->
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  <!-- Kanban Loading State -->
+  @if (isLoading()) {
+    <div class="spinner-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <!-- Main Drop Group Board -->
+    <div class="kanban-board" cdkDropListGroup>
+      @for (stage of stages; track stage) {
+        <div class="kanban-column">
+          <!-- Column Header -->
+          <div class="column-header">
+            <div class="column-info">
+              <span class="column-title">{{ stage }}</span>
+              <span class="column-count">{{ boardData[stage]?.length || 0 }}</span>
+            </div>
+            <span class="column-total">
+              {{ getColumnTotal(stage) | currency:'USD':'symbol':'1.0-0' }}
+            </span>
+          </div>
+
+          <!-- Drop List Area -->
+          <div
+            [id]="stage"
+            [cdkDropListData]="boardData[stage]"
+            (cdkDropListDropped)="onDrop($event)"
+            cdkDropList
+            class="kanban-list"
+          >
+            @for (deal of boardData[stage]; track deal._id) {
+              <!-- Draggable Deal Card -->
+              <mat-card cdkDrag class="deal-card glass-panel" matRipple>
+                <div class="card-header-deal">
+                  <span class="deal-name">{{ deal.name }}</span>
+                  <span class="probability-badge" [class]="stage.replace(' ', '-').toLowerCase()">
+                    {{ deal.probability }}%
+                  </span>
+                </div>
+
+                <div class="card-body-deal">
+                  <div class="customer-row">
+                    <mat-icon class="icon-mini">business</mat-icon>
+                    <span class="customer-name">{{ deal.customerId?.name || 'Unknown Account' }}</span>
+                  </div>
+                  @if (deal.expectedCloseDate) {
+                    <div class="date-row">
+                      <mat-icon class="icon-mini">calendar_today</mat-icon>
+                      <span class="date-text">Close: {{ deal.expectedCloseDate | date:'shortDate' }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="card-footer-deal">
+                  <span class="deal-amount">
+                    {{ deal.amount | currency:'USD':'symbol':'1.0-0' }}
+                  </span>
+                  
+                  <div class="owner-avatar" [matTooltip]="'Owner: ' + (deal.ownerId?.firstName || 'Sales Executive')">
+                    {{ deal.ownerId?.firstName?.charAt(0) || 'S' }}{{ deal.ownerId?.lastName?.charAt(0) || 'E' }}
+                  </div>
+                </div>
+              </mat-card>
+            } @empty {
+              <div class="empty-column-placeholder">
+                <span>No deals here</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

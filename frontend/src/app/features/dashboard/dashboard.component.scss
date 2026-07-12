@@ -1,0 +1,310 @@
+// Design System Variables (Theme variables mapping)
+$background-dark: var(--bg-color);
+$panel-background: var(--panel-bg);
+$panel-border: var(--panel-border);
+$text-light: var(--text-main);
+$text-muted: var(--text-muted);
+$primary-color: hsl(222, 89%, 60%);
+$primary-hover: hsl(222, 89%, 52%);
+$card-shadow: 0 10px 30px var(--shadow-color);
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: $background-dark;
+  color: $text-light;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  overflow-x: hidden;
+  box-sizing: border-box;
+
+  // Sidebar transition parameters
+  &.sidebar-collapsed {
+    .sidebar {
+      width: 70px;
+      .logo-text, .nav-label, .user-details {
+        display: none;
+      }
+      .sidebar-header, .sidebar-footer {
+        justify-content: center;
+      }
+      .nav-item {
+        justify-content: center;
+        padding: 0;
+        height: 48px;
+        width: 48px;
+        border-radius: 12px;
+        margin: 4px auto;
+        mat-icon {
+          margin: 0;
+        }
+      }
+    }
+    .main-content {
+      margin-left: 70px;
+      width: calc(100% - 70px);
+    }
+  }
+}
+
+// 1. Sidebar Styling
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(15, 23, 42, 0.4);
+  border-right: 1px solid $panel-border;
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+
+  .sidebar-header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    border-bottom: 1px solid $panel-border;
+
+    .logo-icon {
+      color: $primary-color;
+      font-size: 26px;
+      height: 26px;
+      width: 26px;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: $text-light;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .nav-divider {
+      height: 1px;
+      background: $panel-border;
+      margin: 12px 10px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 16px;
+      height: 44px;
+      border-radius: 8px;
+      color: $text-muted;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14.5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      mat-icon {
+        font-size: 20px;
+        height: 20px;
+        width: 20px;
+        color: $text-muted;
+        transition: color 0.2s ease;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.03);
+        color: $text-light;
+        mat-icon {
+          color: $text-light;
+        }
+      }
+
+      &.active {
+        background: rgba($primary-color, 0.1);
+        color: $primary-color;
+        mat-icon {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid $panel-border;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(15, 23, 42, 0.1);
+
+    .user-avatar-mini {
+      height: 38px;
+      width: 38px;
+      border-radius: 50%;
+      background: radial-gradient(circle, $primary-color, hsl(222, 89%, 45%));
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .user-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: $text-light;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .user-role {
+        font-size: 11px;
+        color: $text-muted;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+// 2. Main Content & Header
+.main-content {
+  margin-left: 260px;
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.topbar {
+  height: 70px;
+  padding: 0 30px;
+  border-bottom: 1px solid $panel-border;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: rgba($background-dark, 0.6);
+  backdrop-filter: blur(20px);
+  z-index: 90;
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .toggle-sidebar-btn {
+      color: $text-muted;
+      &:hover {
+        color: $text-light;
+      }
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid $panel-border;
+      border-radius: 8px;
+      padding: 0 16px;
+      height: 38px;
+      width: 280px;
+
+      mat-icon {
+        color: $text-muted;
+        font-size: 20px;
+        height: 20px;
+        width: 20px;
+      }
+
+      input {
+        background: none;
+        border: none;
+        color: $text-light;
+        font-size: 13.5px;
+        width: 100%;
+        outline: none;
+
+        &::placeholder {
+          color: $text-muted;
+        }
+      }
+    }
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .notification-btn {
+      color: $text-muted;
+      position: relative;
+      &:hover {
+        color: $text-light;
+      }
+      .badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        height: 8px;
+        width: 8px;
+        background: hsl(0, 84%, 60%);
+        border-radius: 50%;
+        border: 1.5px solid $background-dark;
+      }
+    }
+
+    .user-profile-menu {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .user-avatar {
+        height: 36px;
+        width: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        color: $text-light;
+        font-weight: 500;
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.workspace {
+  padding: 30px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.02) !important;
+  backdrop-filter: blur(10px);
+}

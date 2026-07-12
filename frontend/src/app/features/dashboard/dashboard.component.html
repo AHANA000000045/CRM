@@ -1,0 +1,111 @@
+<div class="dashboard-layout" [class.sidebar-collapsed]="isSidebarCollapsed()">
+  <!-- 1. Left Sidebar Navigation -->
+  <aside class="sidebar glass-panel">
+    <div class="sidebar-header">
+      <mat-icon class="logo-icon">rocket_launch</mat-icon>
+      <span class="logo-text">FlowCRM</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item" routerLink="/dashboard" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" matRipple>
+        <mat-icon>dashboard</mat-icon>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a class="nav-item" routerLink="/dashboard/users" routerLinkActive="active" matRipple>
+        <mat-icon>people</mat-icon>
+        <span class="nav-label">Users</span>
+      </a>
+      <a class="nav-item" routerLink="/dashboard/leads" routerLinkActive="active" matRipple>
+        <mat-icon>leaderboard</mat-icon>
+        <span class="nav-label">Leads</span>
+      </a>
+      <a class="nav-item" routerLink="/dashboard/deals" routerLinkActive="active" matRipple>
+        <mat-icon>monetization_on</mat-icon>
+        <span class="nav-label">Deals</span>
+      </a>
+      <a class="nav-item" matRipple>
+        <mat-icon>business</mat-icon>
+        <span class="nav-label">Organizations</span>
+      </a>
+      <a class="nav-item" matRipple>
+        <mat-icon>assignment</mat-icon>
+        <span class="nav-label">Tasks</span>
+      </a>
+      <a class="nav-item" matRipple>
+        <mat-icon>calendar_today</mat-icon>
+        <span class="nav-label">Calendar</span>
+      </a>
+      <div class="nav-divider"></div>
+      <a class="nav-item" matRipple>
+        <mat-icon>settings</mat-icon>
+        <span class="nav-label">Settings</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-avatar-mini">
+        {{ authService.currentUser()?.firstName?.charAt(0) || 'U' }}
+      </div>
+      <div class="user-details">
+        <span class="user-name">{{ authService.currentUser()?.firstName }} {{ authService.currentUser()?.lastName?.charAt(0) }}.</span>
+        <span class="user-role">{{ authService.currentUser()?.role }}</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 2. Main Content Container -->
+  <main class="main-content">
+    <!-- Topbar Header -->
+    <header class="topbar glass-panel">
+      <div class="topbar-left">
+        <button mat-icon-button class="toggle-sidebar-btn" (click)="toggleSidebar()" matTooltip="Toggle Sidebar">
+          <mat-icon>{{ isSidebarCollapsed() ? 'menu' : 'menu_open' }}</mat-icon>
+        </button>
+        <div class="search-box">
+          <mat-icon>search</mat-icon>
+          <input type="text" placeholder="Search contacts, leads, or deals..." />
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <!-- Theme Selection Dropdown -->
+        <button mat-icon-button [matMenuTriggerFor]="themeMenu" matTooltip="Choose Theme">
+          <mat-icon>{{ getThemeIcon() }}</mat-icon>
+        </button>
+        <mat-menu #themeMenu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="changeTheme('light')">
+            <mat-icon>light_mode</mat-icon>
+            <span>Light</span>
+          </button>
+          <button mat-menu-item (click)="changeTheme('dark')">
+            <mat-icon>dark_mode</mat-icon>
+            <span>Dark</span>
+          </button>
+          <button mat-menu-item (click)="changeTheme('default')">
+            <mat-icon>settings_brightness</mat-icon>
+            <span>System Default</span>
+          </button>
+        </mat-menu>
+
+        <button mat-icon-button class="notification-btn" matTooltip="Notifications">
+          <mat-icon>notifications_none</mat-icon>
+          <span class="badge"></span>
+        </button>
+        
+        <div class="user-profile-menu">
+          <div class="user-avatar">
+            {{ authService.currentUser()?.firstName?.charAt(0) || 'U' }}
+          </div>
+          <button mat-icon-button color="warn" (click)="onLogout()" matTooltip="Logout">
+            <mat-icon>logout</mat-icon>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Workspace -->
+    <div class="workspace">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

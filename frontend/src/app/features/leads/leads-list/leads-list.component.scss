@@ -1,0 +1,300 @@
+$primary-color: hsl(222, 89%, 60%);
+$primary-hover: hsl(222, 89%, 52%);
+$text-main: var(--text-main);
+$text-muted: var(--text-muted);
+$panel-background: var(--panel-bg);
+$panel-border: var(--panel-border);
+$bg-color: var(--bg-color);
+
+// Status color configurations
+$new-color: hsl(200, 95%, 48%);
+$contacted-color: hsl(35, 90%, 55%);
+$qualified-color: hsl(142, 71%, 45%);
+$unqualified-color: hsl(0, 84%, 60%);
+$lost-color: hsl(215, 16%, 47%);
+
+.leads-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .view-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: $text-main;
+    margin: 0 0 4px;
+    letter-spacing: -0.5px;
+  }
+
+  .view-subtitle {
+    font-size: 14px;
+    color: $text-muted;
+    margin: 0;
+  }
+
+  .invite-btn {
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+// Banners styling
+.error-banner, .success-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  margin-bottom: 8px;
+
+  mat-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.error-banner {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: hsl(0, 100%, 75%);
+}
+
+.success-banner {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: hsl(142, 100%, 75%);
+}
+
+// Card details
+.invite-card {
+  border: 1px solid $panel-border;
+  background: $panel-background !important;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease;
+
+  ::ng-deep {
+    .mat-mdc-card-header {
+      padding: 20px 24px 12px;
+      border-bottom: 1px solid $panel-border;
+    }
+    .mat-mdc-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: $text-main;
+    }
+    .mat-mdc-card-subtitle {
+      font-size: 12px;
+      color: $text-muted;
+    }
+  }
+
+  .invite-content {
+    padding: 24px;
+  }
+
+  .invite-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+      .half-width { flex: 1; }
+      .full-width { width: 100%; }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 10px;
+
+      button {
+        height: 38px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+    }
+  }
+}
+
+// Table Card Styling
+.table-card {
+  border: 1px solid $panel-border;
+  background: $panel-background !important;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  .spinner-container {
+    padding: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  background: transparent !important;
+  border-collapse: collapse;
+
+  ::ng-deep {
+    tr.mat-mdc-header-row {
+      background: rgba(255, 255, 255, 0.01) !important;
+      height: 52px;
+    }
+    th.mat-mdc-header-cell {
+      color: $text-muted !important;
+      font-size: 13px;
+      font-weight: 600;
+      border-bottom: 1px solid $panel-border !important;
+    }
+    td.mat-mdc-cell {
+      color: $text-main !important;
+      font-size: 14px;
+      border-bottom: 1px solid $panel-border !important;
+      padding: 16px 8px;
+    }
+    tr.mat-mdc-row {
+      height: 64px;
+      transition: background-color 0.2s ease;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.01);
+      }
+    }
+  }
+
+  .user-fullname {
+    font-weight: 500;
+    color: $text-main;
+  }
+
+  .company-text {
+    font-weight: 500;
+  }
+
+  .user-email {
+    color: $text-muted;
+  }
+
+  .value-text {
+    font-weight: 600;
+    color: $text-main;
+  }
+
+  .source-tag {
+    font-size: 12.5px;
+    color: $text-muted;
+  }
+
+  // Custom lead status tags
+  .status-badge-custom {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+
+    &.new {
+      background: rgba($new-color, 0.1);
+      color: $new-color;
+    }
+    &.contacted {
+      background: rgba($contacted-color, 0.1);
+      color: $contacted-color;
+    }
+    &.qualified {
+      background: rgba($qualified-color, 0.1);
+      color: $qualified-color;
+    }
+    &.unqualified {
+      background: rgba($unqualified-color, 0.1);
+      color: $unqualified-color;
+    }
+    &.lost {
+      background: rgba($lost-color, 0.1);
+      color: $lost-color;
+    }
+  }
+
+  // Conversion actions
+  .convert-action-btn {
+    height: 32px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 10px;
+
+    mat-icon {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+    }
+  }
+
+  .qualified-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: $qualified-color;
+    font-size: 13px;
+    font-weight: 500;
+
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+  }
+}
+
+// Material inputs styling overrides
+::ng-deep {
+  .mat-mdc-text-field-wrapper {
+    background-color: rgba(255, 255, 255, 0.01) !important;
+  }
+  .mat-mdc-form-field-input-control {
+    color: $text-main !important;
+  }
+  .mat-mdc-select-value-text {
+    color: $text-main !important;
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); max-height: 0; overflow: hidden; }
+  to { opacity: 1; transform: translateY(0); max-height: 500px; }
+}
