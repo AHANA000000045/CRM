@@ -71,11 +71,15 @@ $card-shadow: 0 10px 30px var(--shadow-color);
     padding: 0 20px;
     border-bottom: 1px solid $panel-border;
 
-    .logo-icon {
-      color: $primary-color;
-      font-size: 26px;
-      height: 26px;
-      width: 26px;
+    .logo-img {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      transition: transform 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
     }
 
     .logo-text {

@@ -2,8 +2,7 @@
   <!-- 1. Left Sidebar Navigation -->
   <aside class="sidebar glass-panel">
     <div class="sidebar-header">
-      <mat-icon class="logo-icon">rocket_launch</mat-icon>
-      <span class="logo-text">FlowCRM</span>
+      <img src="/logo.png" alt="CRM Logo" class="logo-img" />
     </div>
 
     <nav class="sidebar-nav">
@@ -23,20 +22,20 @@
         <mat-icon>monetization_on</mat-icon>
         <span class="nav-label">Deals</span>
       </a>
-      <a class="nav-item" matRipple>
+      <a class="nav-item" routerLink="/dashboard/organizations" routerLinkActive="active" matRipple>
         <mat-icon>business</mat-icon>
         <span class="nav-label">Organizations</span>
       </a>
-      <a class="nav-item" matRipple>
+      <a class="nav-item" routerLink="/dashboard/tasks" routerLinkActive="active" matRipple>
         <mat-icon>assignment</mat-icon>
         <span class="nav-label">Tasks</span>
       </a>
-      <a class="nav-item" matRipple>
+      <a class="nav-item" routerLink="/dashboard/calendar" routerLinkActive="active" matRipple>
         <mat-icon>calendar_today</mat-icon>
         <span class="nav-label">Calendar</span>
       </a>
       <div class="nav-divider"></div>
-      <a class="nav-item" matRipple>
+      <a class="nav-item" routerLink="/dashboard/settings" routerLinkActive="active" matRipple>
         <mat-icon>settings</mat-icon>
         <span class="nav-label">Settings</span>
       </a>

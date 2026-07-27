@@ -4,11 +4,15 @@ import { Model, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
+import { Organization, OrganizationDocument } from '../organizations/schemas/organization.schema';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Organization.name) private orgModel: Model<OrganizationDocument>,
+    private mailService: MailService,
   ) {}
 
   async create(createUserDto: CreateUserDto, organizationId: string): Promise<UserDocument> {
@@ -32,7 +36,23 @@ export class UsersService {
       role,
     });
 
-    return newUser.save();
+    const savedUser = await newUser.save();
+
+    // Dispatch invitation email asynchronously in background
+    this.sendInviteEmailAsync(savedUser, password, organizationId);
+
+    return savedUser;
+  }
+
+  private async sendInviteEmailAsync(user: UserDocument, rawPassword: string, organizationId: string) {
+    try {
+      const org = await this.orgModel.findById(organizationId).exec();
+      const orgName = org ? org.name : 'FlowCRM';
+      const fullName = `${user.firstName} ${user.lastName}`;
+      await this.mailService.sendInvitation(user.email, fullName, orgName, rawPassword);
+    } catch (err) {
+      console.error('Failed to send background invitation email:', err);
+    }
   }
 
   async findByEmail(email: string): Promise<UserDocument | null> {

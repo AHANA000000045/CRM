@@ -1,0 +1,366 @@
+$primary-color: hsl(222, 89%, 60%);
+$primary-hover: hsl(222, 89%, 52%);
+$text-main: var(--text-main);
+$text-muted: var(--text-muted);
+$panel-background: var(--panel-bg);
+$panel-border: var(--panel-border);
+$bg-color: var(--bg-color);
+
+.org-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .view-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: $text-main;
+    margin: 0 0 4px;
+    letter-spacing: -0.5px;
+  }
+
+  .view-subtitle {
+    font-size: 14px;
+    color: $text-muted;
+    margin: 0;
+  }
+
+  .action-btn {
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+}
+
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.org-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 24px;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.org-card {
+  border-radius: 16px;
+  border: 1px solid $panel-border;
+  background: $panel-background;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+
+  mat-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0;
+    margin-bottom: 24px;
+
+    .header-icon-container {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(59, 130, 246, 0.1);
+      color: $primary-color;
+
+      &.warning {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+      }
+    }
+
+    mat-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: $text-main;
+      margin: 0;
+    }
+
+    mat-card-subtitle {
+      font-size: 13px;
+      color: $text-muted;
+      margin: 4px 0 0;
+    }
+  }
+
+  .card-body {
+    padding: 0;
+  }
+}
+
+.static-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-row {
+  display: flex;
+  gap: 24px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &.half {
+    flex: 1;
+  }
+
+  .detail-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $text-muted;
+  }
+
+  .detail-value {
+    font-size: 15px;
+    color: $text-main;
+
+    &.text-highlight {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.org-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .form-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .half-width {
+    flex: 1;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+}
+
+.department-input-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: center;
+
+  .dept-field {
+    flex: 1;
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      height: 48px;
+    }
+  }
+
+  .add-dept-btn {
+    height: 48px;
+    border-radius: 8px;
+  }
+}
+
+.departments-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dept-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: $text-main;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .dept-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: $text-muted;
+  }
+
+  .dept-name {
+    font-weight: 500;
+  }
+
+  .remove-dept-btn {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-muted;
+    background: transparent;
+
+    mat-icon {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+    }
+
+    &:hover {
+      color: hsl(0, 84%, 60%);
+    }
+  }
+}
+
+.tenant-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tenant-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .label-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $text-muted;
+
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .tenant-value {
+    font-size: 15px;
+    color: $text-main;
+
+    &.code-font {
+      font-family: monospace;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: inline-block;
+      word-break: break-all;
+    }
+
+    &.plan-badge {
+      background: linear-gradient(135deg, hsl(270, 76%, 60%), hsl(222, 89%, 60%));
+      color: white;
+      padding: 4px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+
+  .tenant-hint {
+    font-size: 12px;
+    color: $text-muted;
+    line-height: 1.4;
+  }
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #9ca3af;
+
+    &.active {
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+  }
+
+  .indicator-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: $text-main;
+  }
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  width: 100%;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
