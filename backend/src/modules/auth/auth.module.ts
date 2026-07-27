@@ -16,12 +16,16 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET') || 'fallback_secret',
-        signOptions: {
-          expiresIn: (configService.get<string>('JWT_EXPIRES_IN') || '1h') as any,
-        },
-      }),
+      useFactory: (configService: ConfigService) => {
+        const expiresIn = configService.get<string>('JWT_EXPIRES_IN') || '1h';
+        console.log(`[JWT Config] Expires In: ${expiresIn}`);
+        return {
+          secret: configService.get<string>('JWT_SECRET') || 'fallback_secret',
+          signOptions: {
+            expiresIn: expiresIn as any,
+          },
+        };
+      },
     }),
   ],
   controllers: [AuthController],

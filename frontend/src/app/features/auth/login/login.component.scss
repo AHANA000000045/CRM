@@ -1,12 +1,75 @@
-// Premium Color Palette using HSL
-$primary-color: hsl(222, 89%, 60%);
-$primary-hover: hsl(222, 89%, 52%);
-$background-dark: hsl(222, 47%, 11%);
-$panel-background: rgba(255, 255, 255, 0.03);
-$panel-border: rgba(255, 255, 255, 0.08);
-$text-light: hsl(210, 40%, 98%);
-$text-muted: hsl(215, 20%, 65%);
-$error-color: hsl(0, 84%, 60%);
+// Premium Light Palette
+$primary-color: #2563eb;
+$primary-hover: #1d4ed8;
+$background-dark: #f8fafc;
+$panel-background: #ffffff;
+$panel-border: rgba(0, 0, 0, 0.08);
+$text-light: #0f172a;
+$text-muted: #64748b;
+$error-color: #dc2626;
+
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  box-sizing: border-box;
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .logo-img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: $text-light;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-muted;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+
+      &:hover {
+        color: $text-light;
+        background: rgba(0, 0, 0, 0.04);
+      }
+
+      &.active {
+        color: $primary-color;
+        background: rgba(37, 99, 235, 0.08);
+        font-weight: 600;
+      }
+    }
+  }
+}
 
 .auth-container {
   display: flex;
@@ -14,9 +77,10 @@ $error-color: hsl(0, 84%, 60%);
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  background: radial-gradient(circle at 10% 20%, hsl(224, 64%, 15%) 0%, $background-dark 100%);
+  background: radial-gradient(circle at 50% 50%, #ffffff 0%, $background-dark 100%);
   font-family: 'Outfit', 'Inter', sans-serif;
   box-sizing: border-box;
+  padding-top: 70px; // space for top-nav
 }
 
 .auth-card {
@@ -27,8 +91,7 @@ $error-color: hsl(0, 84%, 60%);
   border-radius: 20px;
   background: $panel-background;
   border: 1px solid $panel-border;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
 }
@@ -43,15 +106,17 @@ $error-color: hsl(0, 84%, 60%);
   .logo-wrapper {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     margin-bottom: 16px;
 
-    .logo-icon {
-      color: $primary-color;
-      font-size: 28px;
-      height: 28px;
-      width: 28px;
-      animation: pulse 3s infinite ease-in-out;
+    .card-logo-img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      
+      &.animate-logo {
+        animation: logoRotateIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
     }
 
     .logo-text {
@@ -112,21 +177,21 @@ $error-color: hsl(0, 84%, 60%);
     width: 100%;
   }
 
-  // Material field overrides for sleek dark theme styling
+  // Material field overrides for sleek light theme styling
   ::ng-deep {
     .mat-mdc-text-field-wrapper {
-      background-color: rgba(255, 255, 255, 0.02) !important;
+      background-color: rgba(0, 0, 0, 0.02) !important;
       border-radius: 8px !important;
     }
     .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
     .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
     .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
-      border-color: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(0, 0, 0, 0.12) !important;
     }
     .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline__leading,
     .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline__notch,
     .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline__trailing {
-      border-color: rgba(255, 255, 255, 0.25) !important;
+      border-color: rgba(0, 0, 0, 0.24) !important;
     }
     .mdc-text-field--focused .mdc-notched-outline__leading,
     .mdc-text-field--focused .mdc-notched-outline__notch,
@@ -217,5 +282,16 @@ $error-color: hsl(0, 84%, 60%);
   50% {
     transform: scale(1.05);
     opacity: 0.85;
+  }
+}
+
+@keyframes logoRotateIn {
+  from {
+    transform: rotate(0deg) scale(0.3);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(360deg) scale(1);
+    opacity: 1;
   }
 }

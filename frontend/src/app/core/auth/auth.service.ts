@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, tap, catchError, throwError, of } from 'rxjs';
 import { AuthResponse, User } from '../models/user.model';
 
-const API_URL = 'http://localhost:3000/api/v1';
+const API_URL = 'http://localhost:3010/api/v1';
 
 @Injectable({
   providedIn: 'root',

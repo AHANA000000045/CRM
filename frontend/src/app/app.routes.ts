@@ -31,6 +31,22 @@ export const routes: Routes = [
         path: 'deals',
         loadComponent: () => import('./features/deals/deals-kanban/deals-kanban.component').then((m) => m.DealsKanbanComponent),
       },
+      {
+        path: 'organizations',
+        loadComponent: () => import('./features/organizations/organizations.component').then((m) => m.OrganizationsComponent),
+      },
+      {
+        path: 'tasks',
+        loadComponent: () => import('./features/tasks/tasks.component').then((m) => m.TasksComponent),
+      },
+      {
+        path: 'calendar',
+        loadComponent: () => import('./features/calendar/calendar.component').then((m) => m.CalendarComponent),
+      },
+      {
+        path: 'settings',
+        loadComponent: () => import('./features/settings/settings.component').then((m) => m.SettingsComponent),
+      },
     ],
   },
   {

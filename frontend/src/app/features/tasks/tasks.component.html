@@ -1,0 +1,132 @@
+<div class="tasks-container">
+  <!-- Header Bar -->
+  <div class="view-header">
+    <div class="header-text">
+      <h1 class="view-title">Task Management</h1>
+      <p class="view-subtitle">Organize, prioritize, and track your client activities and sales follow-ups</p>
+    </div>
+    
+    <button mat-flat-button color="primary" (click)="toggleAddForm()" class="action-btn">
+      <mat-icon>{{ showAddForm() ? 'remove' : 'add' }}</mat-icon>
+      <span>{{ showAddForm() ? 'Cancel' : 'New Task' }}</span>
+    </button>
+  </div>
+
+  <!-- Filters Tab Row -->
+  <div class="filter-row">
+    <div class="filter-tabs">
+      <button class="filter-tab" [class.active]="filter() === 'all'" (click)="setFilter('all')">
+        All Tasks <span class="badge">{{ tasks().length }}</span>
+      </button>
+      <button class="filter-tab" [class.active]="filter() === 'active'" (click)="setFilter('active')">
+        Active <span class="badge">{{ tasks().length - (tasks() | json | slice:0:0).indexOf('completed') }}</span>
+      </button>
+      <button class="filter-tab" [class.active]="filter() === 'completed'" (click)="setFilter('completed')">
+        Completed
+      </button>
+    </div>
+  </div>
+
+  <!-- Banners -->
+  @if (successMessage()) {
+    <div class="success-banner">
+      <mat-icon>check_circle_outline</mat-icon>
+      <span>{{ successMessage() }}</span>
+    </div>
+  }
+
+  <!-- Add Task Form Card -->
+  @if (showAddForm()) {
+    <mat-card class="task-form-card glass-panel">
+      <mat-card-header>
+        <mat-card-title>Create New Task</mat-card-title>
+        <mat-card-subtitle>Detail the work target and assign a deadline</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content class="card-body">
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Task Title</mat-label>
+              <input matInput formControlName="title" placeholder="e.g. Call organization admin" required />
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Priority Level</mat-label>
+              <mat-select formControlName="priority" required>
+                <mat-option value="low">Low Priority</mat-option>
+                <mat-option value="medium">Medium Priority</mat-option>
+                <mat-option value="high">High Priority</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Due Date</mat-label>
+              <input matInput type="date" formControlName="dueDate" required />
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Task Details / Description</mat-label>
+              <textarea matInput formControlName="description" rows="3" placeholder="Provide background context..."></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-flat-button color="primary" type="submit" [disabled]="taskForm.invalid">
+              <mat-icon>check</mat-icon> Add Task
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  <!-- Tasks List Grid -->
+  <div class="tasks-grid">
+    <div class="no-tasks-state" *ngIf="getFilteredTasks().length === 0">
+      <mat-icon class="empty-icon">assignment_turned_in</mat-icon>
+      <h3>No tasks found</h3>
+      <p>Enjoy! You have cleared all tasks in this view.</p>
+    </div>
+
+    <div class="task-item-card glass-panel" [class.completed]="task.status === 'completed'" *ngFor="let task of getFilteredTasks()">
+      <!-- Checkbox & Completion Toggle -->
+      <div class="task-left-section">
+        <mat-checkbox [checked]="task.status === 'completed'" (change)="toggleTaskStatus(task)" color="primary"></mat-checkbox>
+      </div>
+
+      <!-- Card Details -->
+      <div class="task-mid-section">
+        <div class="title-row">
+          <h3 class="task-title">{{ task.title }}</h3>
+          <span class="priority-badge" [class]="getPriorityClass(task.priority)">
+            {{ task.priority }}
+          </span>
+        </div>
+        <p class="task-desc" *ngIf="task.description">{{ task.description }}</p>
+        
+        <div class="meta-row">
+          <div class="meta-item">
+            <mat-icon>event</mat-icon>
+            <span>Due {{ task.dueDate | date: 'mediumDate' }}</span>
+          </div>
+          <div class="meta-item text-muted">
+            <mat-icon>history</mat-icon>
+            <span>Created {{ task.createdAt | date: 'shortTime' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="task-right-section">
+        <button mat-icon-button color="warn" (click)="deleteTask(task.id)" matTooltip="Delete Task">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

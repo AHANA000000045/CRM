@@ -1,9 +1,19 @@
 <div class="auth-container">
+  <!-- Professional Top Navigation Bar -->
+  <header class="top-nav glass-panel">
+    <div class="nav-left">
+      <img src="/logo.png" alt="CRM Logo" class="logo-img" />
+    </div>
+    <div class="nav-right">
+      <a routerLink="/auth/login" class="nav-link" matRipple>Login</a>
+      <a routerLink="/auth/register" class="nav-link active" matRipple>Register your team</a>
+    </div>
+  </header>
+
   <mat-card class="auth-card glass-panel">
     <mat-card-header class="auth-header">
       <div class="logo-wrapper">
-        <mat-icon class="logo-icon">rocket_launch</mat-icon>
-        <span class="logo-text">FlowCRM</span>
+        <img src="/logo.png" alt="CRM Logo" class="card-logo-img animate-logo" />
       </div>
       <mat-card-title class="auth-title">Create your workspace</mat-card-title>
       <mat-card-subtitle class="auth-subtitle">Register your organization to start scaling</mat-card-subtitle>

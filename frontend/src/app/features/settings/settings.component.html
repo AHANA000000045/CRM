@@ -1,0 +1,137 @@
+<div class="settings-container">
+  <!-- Header Bar -->
+  <div class="view-header">
+    <div class="header-text">
+      <h1 class="view-title">User Settings</h1>
+      <p class="view-subtitle">Manage your profile details, notification options and default application configurations</p>
+    </div>
+  </div>
+
+  <!-- Banners -->
+  @if (successMessage()) {
+    <div class="success-banner">
+      <mat-icon>check_circle_outline</mat-icon>
+      <span>{{ successMessage() }}</span>
+    </div>
+  }
+
+  <div class="settings-grid">
+    <!-- Left Panel: User Profile Context -->
+    <div class="grid-col main-col">
+      <mat-card class="settings-card glass-panel">
+        <mat-card-header>
+          <div class="header-icon-container">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <mat-card-title>My Account Profile</mat-card-title>
+          <mat-card-subtitle>Seeded login profile detail boundary</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="card-body">
+          <div class="profile-details" *ngIf="authService.currentUser() as user">
+            <div class="detail-row">
+              <div class="detail-item half">
+                <span class="detail-label">First Name</span>
+                <span class="detail-value">{{ user.firstName }}</span>
+              </div>
+              <div class="detail-item half">
+                <span class="detail-label">Last Name</span>
+                <span class="detail-value">{{ user.lastName }}</span>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">Email Address</span>
+              <span class="detail-value">{{ user.email }}</span>
+            </div>
+
+            <div class="detail-row">
+              <div class="detail-item half">
+                <span class="detail-label">System Role</span>
+                <span class="detail-value role-badge">{{ user.role }}</span>
+              </div>
+              <div class="detail-item half">
+                <span class="detail-label">Account Status</span>
+                <div class="status-indicator">
+                  <span class="indicator-dot active"></span>
+                  <span class="indicator-label">Active</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <span class="detail-label">Organization Tenant ID</span>
+              <span class="detail-value code-font">{{ user.organizationId }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Right Panel: App Preferences & Notifications -->
+    <div class="grid-col side-col">
+      <mat-card class="settings-card glass-panel">
+        <mat-card-header>
+          <div class="header-icon-container warning">
+            <mat-icon>tune</mat-icon>
+          </div>
+          <mat-card-title>CRM Preferences</mat-card-title>
+          <mat-card-subtitle>Customize your user workspace experience</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="card-body">
+          <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()" class="preferences-form">
+            <!-- Notifications Toggles -->
+            <div class="preference-section">
+              <h3 class="section-title">Notification Channels</h3>
+              
+              <div class="toggle-item">
+                <div class="toggle-label-group">
+                  <span class="toggle-title">Email Notifications</span>
+                  <span class="toggle-desc">Receive updates about leads or tasks assigned to you</span>
+                </div>
+                <mat-slide-toggle formControlName="emailNotifications" color="primary"></mat-slide-toggle>
+              </div>
+
+              <div class="toggle-item">
+                <div class="toggle-label-group">
+                  <span class="toggle-title">In-App Banner Alerts</span>
+                  <span class="toggle-desc">Trigger real-time push alerts within browser session</span>
+                </div>
+                <mat-slide-toggle formControlName="pushNotifications" color="primary"></mat-slide-toggle>
+              </div>
+
+              <div class="toggle-item">
+                <div class="toggle-label-group">
+                  <span class="toggle-title">Weekly Digest Target</span>
+                  <span class="toggle-desc">Email summaries of pipeline health and deal metrics</span>
+                </div>
+                <mat-slide-toggle formControlName="weeklyDigest" color="primary"></mat-slide-toggle>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Radio Landing View -->
+            <div class="preference-section">
+              <h3 class="section-title">Landing Dashboard Module</h3>
+              <p class="section-desc">Choose which workspace screen displays first upon user authentication login</p>
+              
+              <mat-radio-group formControlName="defaultView" class="radio-group" color="primary">
+                <mat-radio-button value="dashboard">Dashboard Metrics</mat-radio-button>
+                <mat-radio-button value="leads">Leads Directory List</mat-radio-button>
+                <mat-radio-button value="deals">Deals Kanban Board</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <div class="form-actions">
+              <button mat-flat-button color="primary" type="submit" class="save-btn">
+                <mat-icon>save</mat-icon> Save Preferences
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
