@@ -41,6 +41,7 @@ export class DatabaseSeederService implements OnModuleInit {
           lastName: 'Administrator',
           role: Role.SUPER_ADMIN,
           isActive: true,
+          permissions: ['*'],
         });
         await newSuperAdmin.save();
         console.log('--- ✅ Super Admin created: superadmin@flowcrm.com / SuperAdmin2026! ---');

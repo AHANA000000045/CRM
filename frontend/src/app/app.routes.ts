@@ -20,8 +20,20 @@ export const routes: Routes = [
         loadComponent: () => import('./features/dashboard/metrics/metrics.component').then((m) => m.MetricsComponent),
       },
       {
+        path: 'bde',
+        loadComponent: () => import('./features/dashboard/bde-center/bde-center.component').then((m) => m.BdeCenterComponent),
+      },
+      {
+        path: 'registered-teams',
+        loadComponent: () => import('./features/dashboard/registered-teams/registered-teams.component').then((m) => m.RegisteredTeamsComponent),
+      },
+      {
         path: 'users',
         loadComponent: () => import('./features/users/users-list/users-list.component').then((m) => m.UsersListComponent),
+      },
+      {
+        path: 'users/permissions',
+        loadComponent: () => import('./features/users/permission-matrix/permission-matrix.component').then((m) => m.PermissionMatrixComponent),
       },
       {
         path: 'leads',

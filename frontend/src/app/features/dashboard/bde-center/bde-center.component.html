@@ -1,0 +1,156 @@
+<div class="bde-container">
+  <!-- Header Banner -->
+  <div class="bde-header glass-card">
+    <div class="header-left">
+      <div class="ai-badge">
+        <mat-icon>auto_awesome</mat-icon>
+        <span>INTELLIGENT ADVISOR</span>
+      </div>
+      <h1>Business Decision Center</h1>
+      <p>Continuous AI & Rule-driven analysis transforming CRM data into actionable revenue decisions.</p>
+    </div>
+    <div class="header-right">
+      <button mat-flat-button color="primary" class="refresh-btn" (click)="fetchData()" [disabled]="loading()">
+        <mat-icon [class.spin]="loading()">refresh</mat-icon>
+        <span>Re-Analyze CRM</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Summary KPI Section -->
+  <div class="kpi-grid" *ngIf="data() as res">
+    <!-- Health Score Card -->
+    <div class="kpi-card health-card glass-card">
+      <div class="health-gauge">
+        <div class="gauge-value" [ngClass]="{
+          'healthy': res.summary.healthScore >= 80,
+          'warning': res.summary.healthScore >= 60 && res.summary.healthScore < 80,
+          'critical': res.summary.healthScore < 60
+        }">
+          {{ res.summary.healthScore }}%
+        </div>
+        <div class="gauge-label">Health Score</div>
+      </div>
+      <div class="kpi-info">
+        <h3>Business Health</h3>
+        <p *ngIf="res.summary.healthScore >= 80">Pipeline is healthy. Low risk profile detected.</p>
+        <p *ngIf="res.summary.healthScore < 80">Attention needed on {{ res.summary.highPriorityCount }} high priority risks.</p>
+      </div>
+    </div>
+
+    <!-- Revenue At Risk Card -->
+    <div class="kpi-card risk-card glass-card">
+      <div class="kpi-icon-wrap risk">
+        <mat-icon>shield_with_heart</mat-icon>
+      </div>
+      <div class="kpi-details">
+        <span class="kpi-title">Revenue At Risk</span>
+        <span class="kpi-val text-warn">₹{{ res.summary.revenueAtRisk.toLocaleString() }}</span>
+        <span class="kpi-sub">Stalled & uncontacted deals</span>
+      </div>
+    </div>
+
+    <!-- Opportunity Growth Card -->
+    <div class="kpi-card opp-card glass-card">
+      <div class="kpi-icon-wrap growth">
+        <mat-icon>trending_up</mat-icon>
+      </div>
+      <div class="kpi-details">
+        <span class="kpi-title">Growth Pipeline</span>
+        <span class="kpi-val text-success">₹{{ res.summary.opportunityValue.toLocaleString() }}</span>
+        <span class="kpi-sub">High-value unassigned leads</span>
+      </div>
+    </div>
+
+    <!-- High Priority Count -->
+    <div class="kpi-card priority-card glass-card">
+      <div class="kpi-icon-wrap alert">
+        <mat-icon>error_outline</mat-icon>
+      </div>
+      <div class="kpi-details">
+        <span class="kpi-title">High Priority Alerts</span>
+        <span class="kpi-val text-danger">{{ res.summary.highPriorityCount }}</span>
+        <span class="kpi-sub">Action required today</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Chips -->
+  <div class="category-filters">
+    <button
+      *ngFor="let cat of categories"
+      class="filter-chip"
+      [class.active]="activeCategory() === cat.key"
+      (click)="setCategory(cat.key)"
+      matRipple
+    >
+      <mat-icon>{{ cat.icon }}</mat-icon>
+      <span>{{ cat.label }}</span>
+      <span class="chip-count" *ngIf="data() as res">
+        {{ cat.key === 'ALL' ? res.recommendations.length : (res.summary.categoryCounts[cat.key] || 0) }}
+      </span>
+    </button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="loading-state" *ngIf="loading()">
+    <mat-icon class="spin-huge">auto_awesome</mat-icon>
+    <p>Evaluating CRM pipeline algorithms & business decision rules...</p>
+  </div>
+
+  <!-- Recommendations List Grid -->
+  <div class="recommendations-grid" *ngIf="!loading()">
+    <div
+      *ngFor="let rec of filteredRecommendations()"
+      class="rec-card glass-card"
+      [ngClass]="'priority-' + rec.priority.toLowerCase()"
+    >
+      <!-- Top Meta Bar -->
+      <div class="card-meta">
+        <div class="cat-pill">
+          <mat-icon>{{ getCategoryIcon(rec.category) }}</mat-icon>
+          <span>{{ rec.category }}</span>
+        </div>
+        <div class="priority-badge" [ngClass]="'badge-' + rec.priority.toLowerCase()">
+          {{ rec.priority }} PRIORITY
+        </div>
+      </div>
+
+      <!-- Recommendation Body -->
+      <div class="card-body">
+        <h2 class="rec-title">{{ rec.title }}</h2>
+        <div class="rec-action-text">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>{{ rec.recommendation }}</span>
+        </div>
+
+        <div class="reason-box">
+          <span class="reason-label">REASONING & AUDIT:</span>
+          <p>{{ rec.reason }}</p>
+        </div>
+      </div>
+
+      <!-- Footer Info & Trigger Button -->
+      <div class="card-footer">
+        <div class="footer-metrics">
+          <div class="metric-item">
+            <span class="m-label">ESTIMATED IMPACT</span>
+            <span class="m-val">{{ rec.formattedImpact }}</span>
+          </div>
+          <div class="metric-item">
+            <span class="m-label">CONFIDENCE</span>
+            <div class="confidence-bar-wrap" [matTooltip]="rec.confidenceScore + '% confidence algorithm score'">
+              <div class="confidence-fill" [style.width.%]="rec.confidenceScore"></div>
+              <span>{{ rec.confidenceScore }}%</span>
+            </div>
+          </div>
+        </div>
+
+        <button mat-flat-button color="accent" class="action-btn" (click)="onTakeAction(rec)">
+          <span>{{ rec.actionLabel }}</span>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

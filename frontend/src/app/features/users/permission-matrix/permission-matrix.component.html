@@ -1,0 +1,59 @@
+<div class="matrix-container">
+  <div class="header-card glass-card">
+    <div class="header-left">
+      <div class="org-badge">
+        <mat-icon>security</mat-icon>
+        <span>TEAM PERMISSION CONTROL</span>
+      </div>
+      <h1>Role & Permission Control Matrix</h1>
+      <p>Configure fine-grained system permissions for each team member in your organization.</p>
+    </div>
+    <button mat-flat-button color="primary" (click)="fetchUsers()" [disabled]="loading()">
+      <mat-icon [class.spin]="loading()">refresh</mat-icon>
+      <span>Reload Matrix</span>
+    </button>
+  </div>
+
+  <div class="matrix-card glass-card">
+    <div class="table-responsive" *ngIf="!loading()">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>TEAM MEMBER</th>
+            <th>ROLE</th>
+            <th *ngFor="let p of permissionKeys" class="text-center">{{ p.label | uppercase }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of users()">
+            <td>
+              <div class="user-cell">
+                <div class="u-avatar">{{ u.firstName.charAt(0) }}</div>
+                <div class="u-details">
+                  <span class="u-name">{{ u.firstName }} {{ u.lastName }}</span>
+                  <span class="u-email">{{ u.email }}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="role-pill" [ngClass]="u.role.toLowerCase().replace(' ', '-')">{{ u.role }}</span>
+            </td>
+            <td *ngFor="let p of permissionKeys" class="text-center">
+              <mat-checkbox
+                [checked]="hasPerm(u, p.key)"
+                [disabled]="u.role === 'Super Admin' || u.role === 'Organization Admin'"
+                (change)="togglePerm(u, p.key)"
+                color="primary"
+              ></mat-checkbox>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="loading-state" *ngIf="loading()">
+      <mat-icon class="spin">autorenew</mat-icon>
+      <p>Loading permission matrix...</p>
+    </div>
+  </div>
+</div>

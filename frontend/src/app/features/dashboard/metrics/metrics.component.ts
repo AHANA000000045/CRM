@@ -5,18 +5,30 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRippleModule } from '@angular/material/core';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
+import { BdeService, BdeDecisionCenterResponse } from '../../../core/services/bde.service';
 import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-dashboard-metrics',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatIconModule, MatTooltipModule, MatRippleModule],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatCardModule, MatIconModule, MatTooltipModule, MatRippleModule],
   templateUrl: './metrics.component.html',
   styleUrls: ['./metrics.component.scss'],
 })
 export class MetricsComponent implements AfterViewInit {
   authService = inject(AuthService);
+  private bdeService = inject(BdeService);
+
+  bdeData = signal<BdeDecisionCenterResponse | null>(null);
+
+  constructor() {
+    this.bdeService.getDecisionCenter().subscribe({
+      next: (res) => this.bdeData.set(res),
+      error: () => {},
+    });
+  }
 
   @ViewChild('pipelineChart') pipelineChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('leadChart') leadChartRef!: ElementRef<HTMLCanvasElement>;

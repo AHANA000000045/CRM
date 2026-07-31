@@ -26,6 +26,105 @@ $deal-color: hsl(35, 90%, 55%);
   }
 }
 
+.bde-widget-card {
+  margin-top: 20px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.25);
+  }
+
+  .widget-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .bde-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+      width: fit-content;
+
+      mat-icon {
+        font-size: 13px;
+        width: 13px;
+        height: 13px;
+      }
+    }
+
+    .widget-heading {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0;
+      color: $text-light;
+    }
+
+    .widget-desc {
+      font-size: 13px;
+      margin: 0;
+      color: $text-muted;
+    }
+  }
+
+  .widget-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .widget-score-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+
+      .score-val {
+        font-size: 20px;
+        font-weight: 800;
+        color: #22c55e;
+      }
+
+      .score-label {
+        font-size: 10px;
+        color: $text-muted;
+        font-weight: 600;
+      }
+    }
+
+    .widget-action {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #818cf8;
+
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

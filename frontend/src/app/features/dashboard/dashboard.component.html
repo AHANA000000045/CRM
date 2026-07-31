@@ -10,9 +10,51 @@
         <mat-icon>dashboard</mat-icon>
         <span class="nav-label">Dashboard</span>
       </a>
-      <a class="nav-item" routerLink="/dashboard/users" routerLinkActive="active" matRipple>
+      
+      <!-- Super Admin Special Registered Teams Navigation -->
+      <a
+        *ngIf="authService.currentUser()?.role === 'Super Admin'"
+        class="nav-item super-admin-nav"
+        routerLink="/dashboard/registered-teams"
+        routerLinkActive="active"
+        matRipple
+      >
+        <mat-icon>business</mat-icon>
+        <span class="nav-label">Registered Teams</span>
+      </a>
+
+      <a
+        *ngIf="authService.currentUser()?.role === 'Super Admin' || authService.currentUser()?.role === 'Organization Admin' || authService.currentUser()?.role === 'Sales Manager'"
+        class="nav-item bde-nav-highlight"
+        routerLink="/dashboard/bde"
+        routerLinkActive="active"
+        matRipple
+      >
+        <mat-icon>auto_awesome</mat-icon>
+        <span class="nav-label">Decision Engine</span>
+      </a>
+
+      <!-- Org Head / Admin User & Permission Management -->
+      <a
+        *ngIf="authService.currentUser()?.role === 'Super Admin' || authService.currentUser()?.role === 'Organization Admin'"
+        class="nav-item"
+        routerLink="/dashboard/users"
+        [routerLinkActiveOptions]="{exact: true}"
+        routerLinkActive="active"
+        matRipple
+      >
         <mat-icon>people</mat-icon>
         <span class="nav-label">Users</span>
+      </a>
+      <a
+        *ngIf="authService.currentUser()?.role === 'Super Admin' || authService.currentUser()?.role === 'Organization Admin'"
+        class="nav-item"
+        routerLink="/dashboard/users/permissions"
+        routerLinkActive="active"
+        matRipple
+      >
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span class="nav-label">Permissions</span>
       </a>
       <a class="nav-item" routerLink="/dashboard/leads" routerLinkActive="active" matRipple>
         <mat-icon>leaderboard</mat-icon>

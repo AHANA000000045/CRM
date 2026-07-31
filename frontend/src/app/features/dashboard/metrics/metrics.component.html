@@ -4,6 +4,28 @@
   <p class="welcome-subtitle">Here is the latest snapshot for your workspace today.</p>
 </div>
 
+<!-- BDE Decision Banner Widget -->
+<div class="bde-widget-card glass-panel" *ngIf="(authService.currentUser()?.role === 'Super Admin' || authService.currentUser()?.role === 'Organization Admin' || authService.currentUser()?.role === 'Sales Manager') && bdeData() as res" routerLink="/dashboard/bde" matRipple>
+  <div class="widget-left">
+    <div class="bde-pill">
+      <mat-icon>auto_awesome</mat-icon>
+      <span>BUSINESS DECISION ENGINE</span>
+    </div>
+    <h3 class="widget-heading">Top Recommendation: {{ res.recommendations[0]?.title }}</h3>
+    <p class="widget-desc">{{ res.recommendations[0]?.recommendation }}</p>
+  </div>
+  <div class="widget-right">
+    <div class="widget-score-badge">
+      <span class="score-val">{{ res.summary.healthScore }}%</span>
+      <span class="score-label">Health Score</span>
+    </div>
+    <div class="widget-action">
+      <span>Open Decision Center</span>
+      <mat-icon>arrow_forward</mat-icon>
+    </div>
+  </div>
+</div>
+
 <!-- Metrics KPI Grid -->
 <div class="metrics-grid">
   @for (metric of metrics; track metric.title) {

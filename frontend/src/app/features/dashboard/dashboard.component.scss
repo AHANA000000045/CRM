@@ -75,10 +75,12 @@ $card-shadow: 0 10px 30px var(--shadow-color);
       height: 36px;
       width: auto;
       object-fit: contain;
-      transition: transform 0.2s ease;
+      animation: logoFullRotateSequence 8s ease-in-out infinite;
+      transition: transform 0.3s ease, filter 0.3s ease;
       
       &:hover {
-        transform: scale(1.05);
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.9));
       }
     }
 
@@ -138,6 +140,49 @@ $card-shadow: 0 10px 30px var(--shadow-color);
         color: $primary-color;
         mat-icon {
           color: $primary-color;
+        }
+      }
+
+      &.bde-nav-highlight {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.12));
+        border: 1px solid rgba(99, 102, 241, 0.25);
+        color: #818cf8;
+
+        mat-icon {
+          color: #a855f7;
+        }
+
+        &:hover {
+          background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.25));
+          color: #a5b4fc;
+        }
+
+        &.active {
+          background: linear-gradient(135deg, #6366f1, #a855f7);
+          color: white;
+
+          mat-icon {
+            color: white;
+          }
+        }
+      }
+
+      &.super-admin-nav {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        color: #60a5fa;
+
+        mat-icon {
+          color: #3b82f6;
+        }
+
+        &.active {
+          background: linear-gradient(135deg, #3b82f6, #2563eb);
+          color: white;
+
+          mat-icon {
+            color: white;
+          }
         }
       }
     }
@@ -311,4 +356,27 @@ $card-shadow: 0 10px 30px var(--shadow-color);
 .glass-panel {
   background: rgba(255, 255, 255, 0.02) !important;
   backdrop-filter: blur(10px);
+}
+
+@keyframes logoFullRotateSequence {
+  0% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.4));
+  }
+  18% {
+    transform: rotate(360deg) scale(1.08);
+    filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.9));
+  }
+  50% {
+    transform: rotate(360deg) scale(1);
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.4));
+  }
+  68% {
+    transform: rotate(0deg) scale(1.08);
+    filter: drop-shadow(0 0 18px rgba(59, 130, 246, 0.9));
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.4));
+  }
 }

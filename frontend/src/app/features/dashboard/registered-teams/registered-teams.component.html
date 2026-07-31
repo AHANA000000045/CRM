@@ -1,0 +1,114 @@
+<div class="teams-container">
+  <!-- Top Banner -->
+  <div class="header-card glass-card">
+    <div class="header-left">
+      <div class="admin-badge">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>SUPER ADMIN PLATFORM CONTROL</span>
+      </div>
+      <h1>Registered Teams & Organization Heads</h1>
+      <p>Real-time audit overview of all organizations and team heads registered in FlowCRM.</p>
+    </div>
+    <button mat-flat-button color="primary" class="refresh-btn" (click)="fetchRegisteredTeams()" [disabled]="loading()">
+      <mat-icon [class.spin]="loading()">refresh</mat-icon>
+      <span>Refresh Audit</span>
+    </button>
+  </div>
+
+  <!-- KPI Summary Row -->
+  <div class="kpi-row">
+    <div class="kpi-card glass-card">
+      <mat-icon class="icon-blue">business</mat-icon>
+      <div class="kpi-info">
+        <span class="kpi-num">{{ teams().length }}</span>
+        <span class="kpi-label">Total Registered Teams</span>
+      </div>
+    </div>
+    <div class="kpi-card glass-card">
+      <mat-icon class="icon-green">check_circle</mat-icon>
+      <div class="kpi-info">
+        <span class="kpi-num">{{ teams().length }}</span>
+        <span class="kpi-label">Active Organization Heads</span>
+      </div>
+    </div>
+    <div class="kpi-card glass-card">
+      <mat-icon class="icon-purple">star</mat-icon>
+      <div class="kpi-info">
+        <span class="kpi-num">Enterprise</span>
+        <span class="kpi-label">Platform Plan Access</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audit Table Section -->
+  <div class="table-card glass-card">
+    <div class="table-header">
+      <h2>Registered Organizations & Team Heads</h2>
+      <span class="count-pill">{{ teams().length }} Organizations</span>
+    </div>
+
+    <div class="table-responsive" *ngIf="!loading()">
+      <table class="teams-table">
+        <thead>
+          <tr>
+            <th>ORGANIZATION NAME</th>
+            <th>DOMAIN</th>
+            <th>ORGANIZATION HEAD (ADMIN)</th>
+            <th>HEAD EMAIL</th>
+            <th>REGISTRATION DATE</th>
+            <th>PLAN</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of teams()">
+            <td>
+              <div class="org-name-cell">
+                <div class="org-avatar">{{ team.name.charAt(0) }}</div>
+                <span class="name-text">{{ team.name }}</span>
+              </div>
+            </td>
+            <td><code>{{ team.domain }}</code></td>
+            <td>
+              <div class="head-user-cell" *ngIf="team.headUser">
+                <span class="user-full-name">{{ team.headUser.firstName }} {{ team.headUser.lastName }}</span>
+                <span class="role-badge">{{ team.headUser.role }}</span>
+              </div>
+              <span *ngIf="!team.headUser" class="text-muted">No Head Assigned</span>
+            </td>
+            <td>
+              <span class="email-text" *ngIf="team.headUser">{{ team.headUser.email }}</span>
+            </td>
+            <td>
+              <span class="date-text">{{ team.createdAt | date: 'mediumDate' }}</span>
+            </td>
+            <td>
+              <span class="plan-badge" [ngClass]="team.billingPlan.toLowerCase()">{{ team.billingPlan }}</span>
+            </td>
+            <td>
+              <span class="status-badge" [class.active]="team.isActive" [class.inactive]="!team.isActive">
+                {{ team.isActive ? 'ACTIVE' : 'INACTIVE' }}
+              </span>
+            </td>
+            <td>
+              <button
+                mat-stroked-button
+                [color]="team.isActive ? 'warn' : 'primary'"
+                class="toggle-btn"
+                (click)="toggleTeamStatus(team)"
+              >
+                <span>{{ team.isActive ? 'Deactivate' : 'Activate' }}</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="loading-box" *ngIf="loading()">
+      <mat-icon class="spin">autorenew</mat-icon>
+      <p>Fetching registered teams audit records...</p>
+    </div>
+  </div>
+</div>

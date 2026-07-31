@@ -50,4 +50,21 @@ export class UsersController {
       isActive: user.isActive,
     };
   }
+
+  @Patch(':id/permissions')
+  @UseGuards(RolesGuard)
+  @Roles(Role.SUPER_ADMIN, Role.ORGANIZATION_ADMIN)
+  @HttpCode(HttpStatus.OK)
+  async updatePermissions(
+    @Req() req: any,
+    @Param('id') id: string,
+    @Body() body: { permissions: string[] },
+  ) {
+    const user = await this.usersService.updatePermissions(id, req.user.organizationId, body.permissions);
+    return {
+      id: user._id,
+      email: user.email,
+      permissions: user.permissions,
+    };
+  }
 }

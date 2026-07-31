@@ -10,6 +10,7 @@ import { CustomersModule } from './modules/customers/customers.module';
 import { ContactsModule } from './modules/contacts/contacts.module';
 import { LeadsModule } from './modules/leads/leads.module';
 import { DealsModule } from './modules/deals/deals.module';
+import { BdeModule } from './modules/bde/bde.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { DealsModule } from './modules/deals/deals.module';
     ContactsModule,
     LeadsModule,
     DealsModule,
+    BdeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
